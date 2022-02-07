@@ -3,6 +3,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
+import json
+
 # Importaciones de modelos 
 from primerComponente.models import PrimerTabla
 
@@ -12,10 +14,19 @@ from primerComponente.serializers import PrimerTablaSerializer
 
 
 class PrimerTablaList(APIView):
+    
+    def aJson(self,datos,mensaje ,status):
+        json0={"messages":mensaje, "pay_load":datos, "status": status }
+        json1=json.dumps(json0)
+        json2 = json.loads(json1)
+        return json2
+    
+    
     def get(self, request, format=None):
         queryset = PrimerTabla.objects.all()
         serializer = PrimerTablaSerializer(queryset,many=True,context={'request':request})
-        return Response(serializer.data)
+        response=self.aJson(serializer.data,"succes" , "200-ok")
+        return Response(response)
 
     def post(self, request, format=None):
         serializer = PrimerTablaSerializer(data = request.data)
@@ -24,6 +35,8 @@ class PrimerTablaList(APIView):
             datas = serializer.data
             return Response(datas,status =status.HTTP_201_CREATED)
         return Response(serializer.errors,status = status.HTTP_400_BAD_REQUEST)
+    
+    
 
 class PrimerTablaDetail(APIView):
     def get_object(self, pk):
