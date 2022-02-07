@@ -37,7 +37,7 @@ class PrimerTablaDetail(APIView):
         if idResponse != 0:
             idResponse = PrimerTablaSerializer(idResponse)
             return Response(idResponse.data, status = status.HTTP_200_OK)
-        return Response("No hay datos deja checo como te arreglo mi pana",status = status.HTTP_400_BAD_REQUEST)
+        return Response("No hay datos en la base de datos bro, lo siento",status = status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, pk, format=None):
         idResponse = self.get_object(pk)
@@ -47,5 +47,14 @@ class PrimerTablaDetail(APIView):
             datas = serializer.data
             return Response(datas,status =status.HTTP_201_CREATED)
         return Response(serializer.errors,status = status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, pk, format=None):
+    
+        aBorrar = self.get_object(pk)
+        if aBorrar!="Dato a borar no encontrado":
+            aBorrar.delete()
+            return Response("ok" ,status=status.HTTP_200_OK)
+        else:
+            return Response("dato no encontrado",status=status.HTTP_400_BAD_REQUEST)
         
         

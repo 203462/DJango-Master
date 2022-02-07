@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #Componentes agregados
-    'primerComponente'
+    'primerComponente',
     'Login',
     'Registro',
 
@@ -92,9 +92,9 @@ WSGI_APPLICATION = 'primerApp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dbDjango',
+        'NAME': 'bdDjango',
         'USER':'postgres',
-        'PASSWORD':'203462',
+        'PASSWORD':'root',
         'HOST':'localhost',
         'PORT':'5432'
     }
