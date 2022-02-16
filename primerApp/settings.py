@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 
+from dotenv import load_dotenv
+import os
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-v8#bx3$_$=%dnvegsh6@edau+8^*#cwtx+p+xdgk4)j82^gq@r'
+SECRET_KEY = os.getenv("SK")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,9 +43,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #Componentes agregados
-    'primerComponente'
+    'primerComponente',
     'Login',
     'Registro',
+    'loadImg',
 
     #Librerias para el proyecto
      'rest_framework',
@@ -91,12 +96,12 @@ WSGI_APPLICATION = 'primerApp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dbDjango',
-        'USER':'postgres',
-        'PASSWORD':'203462',
-        'HOST':'localhost',
-        'PORT':'5432'
+        'ENGINE': os.getenv("E"),
+        'NAME': os.getenv("nombre"),
+        'USER': os.getenv("usuario"),
+        'PASSWORD':os.getenv("contra"),
+        'HOST':os.getenv("HOST"),
+        'PORT':os.getenv("puerto")
     }
 }
 
