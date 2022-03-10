@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SK")
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -47,15 +47,17 @@ INSTALLED_APPS = [
     'Login',
     'Registro',
     'loadImg',
+    'Profile',
 
     #Librerias para el proyecto
-     'rest_framework',
-     'rest_framework.authtoken',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'corsheaders',
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES':('rest_framework.permissions.IsAuthenticated',),
-    'DEFAULT_AUTHENTICATION_CLASSES':('rest_framework.authentication.TokenAuthentication',),
+    'DEFAULT_AUTHENTICATION_CLASSES':('rest_framework.authentication.TokenAuthentication','rest_framework_simplejwt.authentication.JWTAuthentication'),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 100
 }
@@ -68,6 +70,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+]
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
 ]
 
 ROOT_URLCONF = 'primerApp.urls'
@@ -96,12 +103,12 @@ WSGI_APPLICATION = 'primerApp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv("E"),
-        'NAME': os.getenv("nombre"),
-        'USER': os.getenv("usuario"),
-        'PASSWORD':os.getenv("contra"),
+        'ENGINE': os.getenv("ENGINE"),
+        'NAME': os.getenv("NAME"),
+        'USER': os.getenv("USER"),
+        'PASSWORD':os.getenv("PASSWORD"),
         'HOST':os.getenv("HOST"),
-        'PORT':os.getenv("puerto")
+        'PORT':os.getenv("PORT")
     }
 }
 
@@ -141,6 +148,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'assets' )
+MEDIA_URL = '/assets/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
